@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
-import './index.css';
+import './index.scss';
 import AboutPage from './pages/about/AboutPage.tsx';
 import MoviesPage from './pages/movies/MoviesPage.tsx';
 import store from './store/index.ts';

@@ -1,0 +1,47 @@
+@use '../../styles/shared';
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid shared.$border-color;
+  border-radius: 14px;
+  box-shadow: 0px 0px 5px 1px shared.$shadow-color;
+  padding: 4px;
+  max-width: 250px;
+  height: 400px;
+  @media screen and (max-width: shared.$max-mobile-width) {
+    max-width: 100%;
+  }
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  &__content {
+    padding-top: 4px;
+    position: relative;
+  }
+  &__overview {
+    height: 120px;
+
+    // Break line with dots
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+
+    color: shared.$gray-color;
+  }
+  &__popularity {
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+    color: shared.$border-color;
+  }
+  &__thumbmail {
+    height: 160px;
+    width: auto;
+    object-fit: cover;
+    border: 1px solid shared.$border-color;
+    border-radius: 10px 10px 0px 0px;
+  }
+}

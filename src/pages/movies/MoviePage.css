@@ -1,9 +1,0 @@
-.movie-page {
-}
-.movie-page__list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px 40px;
-  justify-content: center;
-}
