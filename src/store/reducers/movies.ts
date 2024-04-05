@@ -5,6 +5,7 @@ export interface Movie {
   title: string;
   popularity: number;
   overview: string;
+  img?: string;
 }
 interface MovieState {
   top: Movie[];

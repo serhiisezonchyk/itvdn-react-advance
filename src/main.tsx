@@ -5,7 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.scss';
 import AboutPage from './pages/about/AboutPage.tsx';
-import MoviesPage from './pages/movies/MoviesPage.tsx';
+import MoviesPage, { MoviesFetch } from './pages/movies/MoviesPage.tsx';
 import store from './store/index.ts';
 
 const router = createBrowserRouter([
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: 'about', element: <AboutPage /> },
-      { path: 'movies', element: <MoviesPage /> },
+      { path: 'movies', element: <MoviesFetch /> },
     ],
   },
 ]);
