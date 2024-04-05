@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { MovieDetails, client } from '../../api/tmdb';
+import { connect } from 'react-redux';
 import MovieCard from '../../components/movie-card/MovieCard';
+import { useAppDispatch } from '../../hooks';
 import { RootState } from '../../store';
-import { Movie, moviesLoaded, moviesLoading } from '../../store/reducers/movies';
+import { Movie, fetchMovies } from '../../store/reducers/movies';
 import styles from './MoviePage.module.scss';
 interface MoviesProps {
   movies: Movie[];
@@ -11,21 +11,9 @@ interface MoviesProps {
 }
 
 const MoviesPage = ({ movies, loading }: MoviesProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    const loadData = async () => {
-      dispatch(moviesLoading());
-      const config = await client.getConiguration();
-      const imageUrl = config.images.base_url;
-      const res = await client.getNowPlaying();
-
-      const mappedResult: MovieDetails[] = res.map((el) => ({
-        ...el,
-        img: el.backdrop_path ? `${imageUrl}w780${el.backdrop_path}` : undefined,
-      }));
-      dispatch(moviesLoaded(mappedResult));
-    };
-    loadData();
+    dispatch(fetchMovies());
   }, [dispatch]);
   return (
     <section className={styles.movie_page}>
