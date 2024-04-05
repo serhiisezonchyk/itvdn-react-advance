@@ -1,4 +1,5 @@
-import { Action, Reducer } from 'redux';
+import { createReducer } from '../../redux/utils';
+import { ActionWithPayload } from './../../redux/utils';
 
 export interface Movie {
   id: number;
@@ -9,40 +10,33 @@ export interface Movie {
 }
 interface MovieState {
   top: Movie[];
+  loading: boolean;
 }
 const initialState: MovieState = {
-  top: [
-    {
-      id: 1,
-      title: 'Inception',
-      popularity: 98,
-      overview:
-        'include trunk why lamp same hospital exercise finish eat shelter planned deep necessary dog bone gulf string pan camera pitch are greater heart show',
-    },
-    {
-      id: 2,
-      title: 'Through',
-      popularity: 90,
-      overview:
-        'include trunk why lamp same hospital exercise finish eat shelter planned deep necessary dog bone gulf string pan camera pitch are greater heart show',
-    },
-    {
-      id: 3,
-      title: 'Caught',
-      popularity: 92,
-      overview:
-        'include trunk why lamp same hospital exercise finish eat shelter planned deep necessary dog bone gulf string pan camera pitch are greater heart show',
-    },
-    {
-      id: 4,
-      title: 'Each',
-      popularity: 93,
-      overview:
-        'include trunk why lamp same hospital exercise finish eat shelter planned deep necessary dog bone gulf string pan camera pitch are greater heart show',
-    },
-  ],
+  top: [],
+  loading: false,
 };
-const moviesReducer: Reducer<MovieState, Action> = (state, action) => {
-  return initialState;
-};
+
+export const moviesLoaded = (movies: Movie[]) => ({
+  type: 'movies/loaded',
+  payload: movies,
+});
+export const moviesLoading = () => ({
+  type: 'movies/loading',
+});
+const moviesReducer = createReducer<MovieState>(initialState, {
+  'movies/loaded': (state, action: ActionWithPayload<Movie[]>) => {
+    return {
+      ...state,
+      top: action.payload,
+      loading: false,
+    };
+  },
+  'movies/loading': (state, action) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  },
+});
 export default moviesReducer;
