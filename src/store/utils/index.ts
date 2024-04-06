@@ -1,7 +1,13 @@
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { Action } from 'redux';
+import { AppDispatch, RootState } from '..';
+
+export const useAppDispatch = useDispatch<AppDispatch>;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
 export interface ActionWithPayload<T> extends Action {
-    payload: T;
-  }
+  payload: T;
+}
 type ActionHandlers<S> = {
   [key: string]: (state: S, action: any) => S;
 };
