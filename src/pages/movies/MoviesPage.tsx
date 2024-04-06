@@ -1,7 +1,8 @@
 import { Container, Grid, LinearProgress, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import MovieCard from '../../components/movie-card/MovieCard';
+import { AuthContext, anonymousUser } from '../../context/AuthContext';
 import { useAppDispatch } from '../../hooks';
 import { RootState } from '../../store';
 import { Movie, fetchMovies } from '../../store/reducers/movies';
@@ -11,6 +12,9 @@ interface MoviesProps {
 }
 
 const MoviesPage = ({ movies, loading }: MoviesProps) => {
+  const { user } = useContext(AuthContext);
+  const loggedIn = user !== anonymousUser;
+  
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchMovies());
@@ -26,7 +30,7 @@ const MoviesPage = ({ movies, loading }: MoviesProps) => {
         <Grid container spacing={4}>
           {movies.map((el) => (
             <Grid item key={el.id} xs={12} sm={6} md={4}>
-              <MovieCard movie={el} img={el.img} />
+              <MovieCard movie={el} img={el.img} enableUserActions={loggedIn} />
             </Grid>
           ))}
         </Grid>

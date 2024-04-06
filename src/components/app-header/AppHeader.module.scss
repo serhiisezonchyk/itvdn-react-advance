@@ -1,0 +1,21 @@
+.app {
+  height: 100vh;
+  &_header {
+    display: flex;
+    height: 80px;
+    align-items: center;
+    &__logo {
+      width: 48px;
+      height: auto;
+    }
+    &__menu {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      &_item {
+        padding: 4px 8px;
+      }
+    }
+  }
+}

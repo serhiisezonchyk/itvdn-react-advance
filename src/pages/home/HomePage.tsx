@@ -1,5 +1,7 @@
 import { Box, Button, Container, Divider, Stack, Typography } from '@mui/material';
+import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { AuthContext, anonymousUser } from '../../context/AuthContext';
 
 const Copyright = () => {
   return (
@@ -9,6 +11,9 @@ const Copyright = () => {
   );
 };
 const HomePage = () => {
+  const { user } = useContext(AuthContext);
+  const loggedIn = user !== anonymousUser;
+  const greeting = loggedIn ? `${user.name}, explore movies today with us!` : 'Explore movies today with us!';
   return (
     <Box
       sx={{
@@ -25,7 +30,7 @@ const HomePage = () => {
           Welcome
         </Typography>
         <Typography component="h5" align="center" color="text.primary" paragraph>
-          Explore movies today with us!
+          {greeting}
         </Typography>
         <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
           <Button component={RouterLink} to="/movies" variant="contained" color="secondary">
