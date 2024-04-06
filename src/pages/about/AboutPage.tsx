@@ -1,12 +1,12 @@
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import CountDownText from '../../components/count-down-text/CountDownText';
+import CounDownVideo from '../../components/count-down-video/CounDownVideo';
 
 const AboutPage = () => {
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
-      <Typography variant="h5" align="center">
-        <CountDownText/>
-      </Typography>
+      <CountDownText />
+      <CounDownVideo />
     </Container>
   );
 };
