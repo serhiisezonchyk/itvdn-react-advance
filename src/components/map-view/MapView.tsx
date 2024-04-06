@@ -8,15 +8,15 @@ const Greeting = () => {
   return (
     <Box>
       <Typography>Greetings from Ukraine.</Typography>
-      <Favorite sx={{color:'#0056B9'}}/>
-      <Favorite sx={{color:'#FFD800'}}/>
+      <Favorite sx={{ color: '#0056B9' }} />
+      <Favorite sx={{ color: '#FFD800' }} />
     </Box>
   );
 };
 const MapView = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
-  const [popupContainer, setPopupContainer] = useState<HTMLElement | null>(null);
+  const [popupContainer, setPopupContainer] = useState<HTMLDivElement | null>(null); 
   useEffect(() => {
     if (mapRef.current === null) {
       const map = createMapWidget(containerRef.current!);
@@ -25,11 +25,11 @@ const MapView = () => {
       setPopupContainer(popupDiv);
     }
   }, []);
+
   return (
     <Container ref={containerRef} sx={{ width: 800, height: 500, my: 2 }}>
       {popupContainer !== null && createPortal(<Greeting />, popupContainer)}
     </Container>
   );
 };
-
 export default MapView;
