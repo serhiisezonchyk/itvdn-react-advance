@@ -1,16 +1,19 @@
 import { Favorite } from '@mui/icons-material';
 import { Button, Card, CardActions, CardContent, CardMedia, IconButton, Tooltip, Typography } from '@mui/material';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Movie } from '../../store/reducers/movies';
 interface MovieCardProps {
   movie: Movie;
   img?: string;
   enableUserActions: boolean;
+  onAddFavorite?(id: number): void;
 }
 const MovieCard = ({
   movie,
   enableUserActions,
   img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8FS4PhZ01cQNfvC80P-NLrvbzG5DzwYGW_-bLRNnjGg&s"',
+  onAddFavorite,
 }: MovieCardProps) => {
   return (
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -32,7 +35,7 @@ const MovieCard = ({
         </Button>
         {enableUserActions && (
           <Tooltip title="Add to favorites.">
-            <IconButton>
+            <IconButton onClick={() => onAddFavorite?.(movie.id)}>
               <Favorite />
             </IconButton>
           </Tooltip>
@@ -42,4 +45,4 @@ const MovieCard = ({
   );
 };
 
-export default MovieCard;
+export default React.memo(MovieCard);

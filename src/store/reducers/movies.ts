@@ -1,5 +1,5 @@
 import { AppThunk } from '..';
-import { client } from '../../api/tmdb';
+import { MovieFilters, client } from '../../api/tmdb';
 import { ActionWithPayload, createReducer } from '../utils';
 
 export interface Movie {
@@ -30,18 +30,22 @@ const moviesLoading = () => ({
   type: 'movies/loading',
 });
 
-export const fetchNextPage = (): AppThunk<Promise<void>> => {
+export const resetMovies = () => ({
+  type: 'movies/reset',
+});
+
+export const fetchNextPage = (filters: MovieFilters = {}): AppThunk<Promise<void>> => {
   return async (dispatch, getState) => {
     const nextPage = getState().movies.page + 1;
-    dispatch(fetchPage(nextPage));
+    dispatch(fetchPage(nextPage, filters));
   };
 };
-export const fetchPage = (page: number): AppThunk<Promise<void>> => {
+export const fetchPage = (page: number, filters: MovieFilters): AppThunk<Promise<void>> => {
   return async (dispatch) => {
     dispatch(moviesLoading());
     const config = await client.getConiguration();
     const imageUrl = config.images.base_url;
-    const res = await client.getNowPlaying(page);
+    const res = await client.getMovies(page, filters);
 
     const mappedResult: Movie[] = res.results.map((el) => ({
       ...el,
@@ -61,11 +65,14 @@ const moviesReducer = createReducer<MovieState>(initialState, {
       loading: false,
     };
   },
-  'movies/loading': (state, action) => {
+  'movies/loading': (state) => {
     return {
       ...state,
       loading: true,
     };
+  },
+  'movies/reset': () => {
+    return { ...initialState };
   },
 });
 export default moviesReducer;
