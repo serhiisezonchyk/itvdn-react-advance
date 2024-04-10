@@ -11,7 +11,7 @@ interface Configuration {
     base_url: string;
   };
 }
-interface MovieDetails {
+export interface MovieDetails {
   id: number;
   title: string;
   popularity: number;

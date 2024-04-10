@@ -1,11 +1,8 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import AuthSection from './AuthSection';
 import HeaderLink from './HeaderLink';
-interface AppHeaderProps {
-  onLogin(): void;
-  onLogout(): void;
-}
-const AppHeader = ({ onLogin, onLogout }: AppHeaderProps) => {
+
+const AppHeader = () => {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -20,7 +17,7 @@ const AppHeader = ({ onLogin, onLogout }: AppHeaderProps) => {
             <HeaderLink to="/movies">Movies</HeaderLink>
           </nav>
         </Box>
-        <AuthSection onLogin={onLogin} onLogout={onLogout} />
+        <AuthSection />
       </Toolbar>
     </AppBar>
   );

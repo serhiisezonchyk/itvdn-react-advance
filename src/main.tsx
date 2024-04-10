@@ -10,8 +10,12 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { Provider } from 'react-redux';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
+import AuthCallback from './auth/AuthCallback.tsx';
+import AuthenticationGuard from './auth/AuthenticationGuard.tsx';
+import StatefulAuthProvider from './auth/StatefulAuthProvider.tsx';
 import './index.scss';
 import HomePage from './pages/home/HomePage.tsx';
+import ProfilePage from './pages/profile/ProfilePage.tsx';
 import store from './store/index.ts';
 
 const MoviesPage = lazy(() => import('./pages/movies/MoviesPage.tsx'));
@@ -27,11 +31,13 @@ function fallbackRender({ error, resetErrorBoundary }: { error: Error; resetErro
 
 const AppEntrypoint = () => {
   return (
-    <Provider store={store}>
-      <ErrorBoundary fallbackRender={fallbackRender} onError={(error, _) => alert(error)}>
-        <App />
-      </ErrorBoundary>
-    </Provider>
+    <StatefulAuthProvider>
+      <Provider store={store}>
+        <ErrorBoundary fallbackRender={fallbackRender} onError={(error, _) => alert(error)}>
+          <App />
+        </ErrorBoundary>
+      </Provider>
+    </StatefulAuthProvider>
   );
 };
 const router = createBrowserRouter([
@@ -49,6 +55,8 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      { path: 'callback', element: <AuthCallback /> },
+      { path: 'profile', element: <AuthenticationGuard component={ProfilePage} /> },
     ],
   },
 ]);

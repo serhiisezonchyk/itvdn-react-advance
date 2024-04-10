@@ -1,23 +1,27 @@
-import { Button, Typography } from '@mui/material';
-import { useContext } from 'react';
-import { AuthContext, anonymousUser } from '../../context/AuthContext';
-interface AuthSectionProps {
-  onLogin(): void;
-  onLogout(): void;
-}
-const AuthSection = ({ onLogin, onLogout }: AuthSectionProps) => {
-  const { user } = useContext(AuthContext);
-  const loggedIn = user !== anonymousUser;
-  if (loggedIn)
-    return (
-      <>
-        <Typography>Hello, {user.name}</Typography>
-        <Button color="inherit" variant="outlined" sx={{ ml: 2 }} onClick={onLogout}>
-          Log Out
-        </Button>
-      </>
-    );
-  return (
+import { useAuth0 } from '@auth0/auth0-react';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import UserSettingsMenu from '../user-settings-menu/UserSettingsMenu';
+const AuthSection = () => {
+  const navigate = useNavigate();
+  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
+  const onLogin = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: window.location.pathname || '/',
+      },
+    });
+  };
+  const onLogout = () => {
+    logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
+  };
+  return isAuthenticated && user ? (
+    <UserSettingsMenu user={user} onLogout={onLogout} onOpenProfile={() => navigate('/profile')} />
+  ) : (
     <Button color="inherit" variant="outlined" onClick={onLogin}>
       Log In
     </Button>

@@ -4,6 +4,7 @@ import MovieCard from '../../components/movie-card/MovieCard';
 import { AuthContext, anonymousUser } from '../../context/AuthContext';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import { MovieFilters, MoviesQuery, useGetConfigurationQuery, useGetMoviesQuery } from '../../services/tmdb';
+import { useAuth0 } from '@auth0/auth0-react';
 const MoviesFilter = lazy(() => import('../../components/movies-filter/MoviesFilter'));
 
 const initialQuery: MoviesQuery = {
@@ -16,8 +17,7 @@ const MoviesPage = () => {
   const { data: configuration } = useGetConfigurationQuery();
   const { data, isFetching } = useGetMoviesQuery(query);
 
-  const { user } = useContext(AuthContext);
-  const loggedIn = user !== anonymousUser;
+  const { user, isAuthenticated } = useAuth0()
 
   const movies = data?.results ?? [];
   const hasMorePages = data?.hasMorePages;
@@ -64,7 +64,7 @@ const MoviesPage = () => {
                 <MovieCard
                   movie={el}
                   img={formatImage(el.backdrop_path)}
-                  enableUserActions={loggedIn}
+                  enableUserActions={isAuthenticated}
                   onAddFavorite={handleAddFavorite}
                 />
               </Grid>

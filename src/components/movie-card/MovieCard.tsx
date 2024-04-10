@@ -2,9 +2,9 @@ import { Favorite } from '@mui/icons-material';
 import { Button, Card, CardActions, CardContent, CardMedia, IconButton, Tooltip, Typography } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Movie } from '../../store/reducers/movies';
+import { MovieDetails } from '../../services/tmdb';
 interface MovieCardProps {
-  movie: Movie;
+  movie: MovieDetails;
   img?: string;
   enableUserActions: boolean;
   onAddFavorite?(id: number): void;

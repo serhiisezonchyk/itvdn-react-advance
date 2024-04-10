@@ -1,7 +1,6 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Button, Container, Divider, Stack, Typography } from '@mui/material';
-import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { AuthContext, anonymousUser } from '../../context/AuthContext';
 
 const Copyright = () => {
   return (
@@ -11,9 +10,8 @@ const Copyright = () => {
   );
 };
 const HomePage = () => {
-  const { user } = useContext(AuthContext);
-  const loggedIn = user !== anonymousUser;
-  const greeting = loggedIn ? `${user.name}, explore movies today with us!` : 'Explore movies today with us!';
+  const { user, isAuthenticated } = useAuth0();
+  const greeting = isAuthenticated ? `${user?.name}, explore movies today with us!` : 'Explore movies today with us!';
   return (
     <Box
       sx={{
