@@ -6,10 +6,10 @@ interface AuthenticationGuardProps {
   component: React.ComponentType;
 }
 const AuthenticationGuard = ({ component }: AuthenticationGuardProps) => {
-  const Component = withAuthenticationRequired(component,{
-    onRedirecting: () => <LinearProgress/>
-  })
-  return <Component/>
+  const Component = withAuthenticationRequired(component, {
+    onRedirecting: () => <LinearProgress />,
+  });
+  return <Component />;
 };
 
 export default AuthenticationGuard;
